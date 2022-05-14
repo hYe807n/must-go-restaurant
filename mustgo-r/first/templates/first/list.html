@@ -8,8 +8,16 @@
           <h5 class="card-title">{{item.name}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{item.address}}</h6>
           <p class="card-text">음식점 설명</p>
-          <a href="#" class="card-link">자세히 보기</a>
-          <a href="#" clss="card-link">수정하기</a>
+          <a
+            href="{% url 'restaurant-detail' %}?id={{item.id}}"
+            class="card-link"
+            >자세히 보기</a
+          >
+          <a
+            href="{% url 'restaurant-update' %}?id={{item.id}}"
+            class="card-link"
+            >수정하기</a
+          >
         </div>
       </div>
     </div>
@@ -27,18 +35,21 @@
           >
           {%endif%}
           <span class="current"> {{restaurants.number }} </span>
-          {%if restaurants.has_next%}
-
+          {%if restaurants.has_next %}
           <a href="?page={{restaurants.next_page_number}}"
             >{{restaurants.next_page_number}}</a
-          >...
+          >
+
+          {% endif %}<span class="current"></span>
+          {%if restaurants.number < lastPage %} ...
           <a href="?page={{restaurants.paginator.num_pages}}"
             >{{restaurants.paginator.num_pages}}</a
           >
-          {%endif%}
+          {% endif %}
         </span>
       </div>
     </div>
   </div>
 </div>
 {%endblock%}
+<!--  -->
