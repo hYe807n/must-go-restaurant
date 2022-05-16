@@ -1,0 +1,12 @@
+{% extends 'first/base.html' %} {% load static %} {% block content %}
+<div class="container">
+  <form action="{% url 'restaurant-delete' id=item.id %}" method="post">
+    {% csrf_token %}
+    <p>
+        <label for="password">password</label>
+        <input name="password" type="password"/>
+    </p>
+    <button type="submit">Delete</button>
+  </form>
+</div>
+{% endblock %}

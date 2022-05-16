@@ -5,10 +5,31 @@
       <h3>{{item.name}}</h3>
       <p>{{item.address}}</p>
       <p>
-        <a href="{% url 'restaurant-delete' %}?id={{item.id}}">
-          <button class="btn btn-danger">삭제하기</button>
+        <a href="{% url 'restaurant-delete' id=item.id%}">
+          <button class="btn btn-danger">Delete List</button>
         </a>
       </p>
+      <hr />
+      <p>
+        <a href="{% url 'review-create' restaurant_id=item.id %}">
+          <button class="btn btn-info">Upload Review</button>
+        </a>
+      </p>
+      {% for review in reviews %} 
+        <div class="card bg-light mb-3">
+          <div class="card-header">
+            <b style="font-size: 18;">5 / {{ review.point }} </b>point
+            <a href="{% url 'review-delete' restaurant_id=item.id review_id=review.id %}" style="float: right;">
+              <button type="button" class="close" aria-label="Close" style="border: none;">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </a>
+          </div>
+          <div class="card-body">
+            <p class="card-text" style="margin: 0;">{{review.created_at|date:"Y. m. d."}}<hr/>{{ review.comment }}</p>
+          </div>
+        </div>
+      {% endfor %}
     </div>
   </div>
 </div>
