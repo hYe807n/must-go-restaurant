@@ -88,7 +88,7 @@ def review_delete(request, restaurant_id, review_id):
 
 def review_list(request):
     reviews = Review.objects.all().select_related().order_by('-created_at')
-    paginator = paginator(reviews, 10)
+    paginator = Paginator(reviews, 10)
     rlastpage = int(paginator.num_pages)-1
 
     page = request.GET.get('page')     #get 메서드로 page 번호를 받아온다
