@@ -24,7 +24,8 @@ def list(request):
 
 def create(request):
     if request.method == 'POST':
-        form = RestaurantForm(request.POST)
+        form = RestaurantForm(request.POST, request.FILES)
+        form.photo = request.FILES['photo']
         if form.is_valid():
             new_item = form.save()
         return HttpResponseRedirect('/first/list/')
@@ -100,3 +101,17 @@ def review_list(request):
     }
     return render(request, 'first/review_list.html', context)
 
+
+def search(request):
+    searchrests = SearchedRestaurant.objects.all().select_related().order_by('-created_at')
+    paginator = Paginator(searchrests, 10)
+    slastpage = int(paginator.num_pages)-1
+    page = request.GET.get('page')
+    items = paginator.get_page(page)
+
+    context={
+        'searchrests' : items, 
+        'slastPage' : slastpage,
+    }
+
+    return render(request, 'first/search.html', context)

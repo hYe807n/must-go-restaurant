@@ -4,6 +4,9 @@
     <div class="col-sm-12" style="margin-top: 20px">
       <h3>{{item.name}}</h3>
       <p>{{item.address}}</p>
+      {% if item.photo %}
+      <img src="{{ item.photo.url }}" style="width: 400px; margin: 20px 0px;">
+      {% endif %}
       <p>
         <a href="{% url 'restaurant-delete' id=item.id%}">
           <button class="btn btn-danger">Delete List</button>

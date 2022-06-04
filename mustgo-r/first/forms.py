@@ -34,17 +34,17 @@ class ReviewForm(ModelForm):
 class RestaurantForm(ModelForm):
     class Meta:
         model = Restaurant
-        fields = ['name', 'address', 'image', 'password']
+        fields = ['name', 'address', 'photo', 'password']
         labels = {
             'name' : _('name'),
             'address' : _('address'),
-            'image' : _('image url'),
+            'photo' : _('photo url'),
             'password' : _('password'),
         }
         helt_texts = {
             'name' : _('Please enter your name.'),
             'address' : _('Please enter your address.'),
-            'image' : _('Please enter your image url.'),
+            'photo' : _('Please enter your photo url.'),
             'password' : _('Please enter your password.'),
         }
         widgets = {
@@ -54,7 +54,7 @@ class RestaurantForm(ModelForm):
             'name' : {
                 'max_length' : _('Name is too long. Please enter no more than 30 characters.'),
             },
-            'image' : {
+            'photo' : {
                 'max_length' : _('ImageUrl is too long. Please enter no more than 30 characters.'),
             },
             'password' : {

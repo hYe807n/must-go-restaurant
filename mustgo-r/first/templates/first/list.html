@@ -5,18 +5,26 @@
     <div class="col-sm-12">
       <div class="card border-secondary">
         <div class="card-body">
+          {% if item.photo %}
+          <img
+            src="{{ item.photo.url }}"
+            style="width: 120px; margin: 0px; float: right"
+          />
+          {% endif %}
           <h5 class="card-title">{{item.name}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{item.address}}</h6>
-          <p class="card-text" >평점:
-            {% if item.average_point == None %}
-              0
-            {% else %}
-            {{ item.average_point }}
-            {% endif %}
-            ({{item.reviews_count}})</p>
-          <p class="card-text">음식점 설명</p>
-          <a href="{% url 'restaurant-detail' id=item.id %}" class="card-link">자세히 보기</a>
-          <a href="{% url 'restaurant-update' %}?id={{ item.id }}" class="card-link" >수정하기</a>
+          <p class="card-text">
+            평점: {% if item.average_point == None %} 0 {% else %} {{
+            item.average_point }} {% endif %} ({{item.reviews_count}})
+          </p>
+          <a href="{% url 'restaurant-detail' id=item.id %}" class="card-link"
+            >자세히 보기</a
+          >
+          <a
+            href="{% url 'restaurant-update' %}?id={{ item.id }}"
+            class="card-link"
+            >수정하기</a
+          >
         </div>
       </div>
     </div>
