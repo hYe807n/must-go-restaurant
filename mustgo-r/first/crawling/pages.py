@@ -12,11 +12,8 @@ request_headers={
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.62 Safari/537.36'
     }
 
-    
 
-a = pyautogui.prompt("검색어를 입력해주세요.")
-
-def mango(a, request_headers):
+def mango(a):
     '''
         #22: 1~5페이지까지 검색된 음식점을 links에 담고,
         26: 음식점의 정보를 담고있는 href로 접근해서
@@ -25,6 +22,8 @@ def mango(a, request_headers):
         except IndexError : index 접근으로 인한 예외처리
         except AttributeError : NoneType 처리로 인한 예외처리
     '''
+    global request_headers
+
     for i in range(1, 5):
         response = requests.get(f'https://www.mangoplate.com/search/{a}?keyword={a}&page={i}', headers = request_headers).text
         soup  = BeautifulSoup(response, 'html.parser')
@@ -53,7 +52,7 @@ def mango(a, request_headers):
                 print(name, address, point, cntreview, img, "mango")     #가게 이름만이라도 있다면 출력
                 
 
-def siksin(a, request_headers):
+def siksin(a):
     '''
         #22: 1~5페이지까지 검색된 음식점을 links에 담고,
         26: 음식점의 정보를 담고있는 href로 접근해서
@@ -62,6 +61,8 @@ def siksin(a, request_headers):
         except IndexError : index 접근으로 인한 예외처리
         except AttributeError : NoneType 처리로 인한 예외처리
     '''
+    global request_headers
+
     response = requests.get(f'https://www.siksinhot.com/search?keywords={a}', headers = request_headers).text
     soup  = BeautifulSoup(response, 'html.parser')
     links = soup.select(".cont")
@@ -156,7 +157,7 @@ def dinning(a):
 
         print(name, address, point, cntreview, img, "dinning")
 
-
-#mango(a, request_headers)
-#siksin(a, request_headers)
-#dinning(a)
+def crawling(a):
+    mango(a)
+    siksin(a)
+    dinning(a)

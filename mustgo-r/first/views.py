@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404, redirect, resolve_url
+from django.shortcuts import render, get_object_or_404, redirect
 from first.models import Restaurant, Review
 from django.core.paginator import Paginator
 from first.forms import RestaurantForm, ReviewForm, UpdateRestaurantForm
 from django.http import HttpResponseRedirect
 from django.db.models import Count, Avg
+from first.crawling.pages import crawling
 
 # Create your views here.
 
@@ -42,7 +43,6 @@ def update(request):
         if form.is_valid() and password == item.password:
             item = form.save()
     elif request.method == "GET" :
-        #item = Restaurant.objects.get(pk = request.GET.get('id'))
         item = get_object_or_404(Restaurant, pk = request.GET.get('id'))
         form = RestaurantForm(instance=item)
         return render(request, 'first/update.html', {'form' : form})
@@ -103,15 +103,19 @@ def review_list(request):
 
 
 def search(request):
-    searchrests = SearchedRestaurant.objects.all().select_related().order_by('-created_at')
-    paginator = Paginator(searchrests, 10)
-    slastpage = int(paginator.num_pages)-1
-    page = request.GET.get('page')
-    items = paginator.get_page(page)
+    # searchrests = SearchedRestaurant.objects.all().select_related().order_by('-created_at')
+    # paginator = Paginator(searchrests, 10)
+    # slastpage = int(paginator.num_pages)-1
+    # page = request.GET.get('page')
+    # items = paginator.get_page(page)
 
-    context={
-        'searchrests' : items, 
-        'slastPage' : slastpage,
-    }
+    # context={
+    #     'searchrests' : items, 
+    #     'slastPage' : slastpage,
+    # }
+    if request.method == "post":
+        keyword = request.GET.get('search','')
+        if keyword == "초밥":
+            return HttpResponseRedirect('/first/list/')
 
-    return render(request, 'first/search.html', context)
+    return render(request, 'first/search.html')
