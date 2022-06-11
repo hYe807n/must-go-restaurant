@@ -1,0 +1,28 @@
+{% extends 'first/base.html' %} {% load static %} {% block content %}
+<div class="container">
+  {% for item in items %}
+  <div class="row search-item" style="margin: 20px auto">
+    {%for name, address, point, count, img, platform in item%}
+    <div class="col-sm-12">
+      <div class="card border-secondary">
+        <div class="card-body">
+          <!-- {% if item.photo %}
+        <img
+          src="{{ item.photo.url }}"
+          style="width: 120px; margin: 0px; float: right"
+        />
+        {% endif %} -->
+          <h5 class="card-title">{{name}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{address}}</h6>
+          <p class="card-text">
+            평점: {% if item.average_point == None %} 0 {% else %} {{ point }}
+            {% endif %} ({{count}})
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %} {% endfor %}
+</div>
+
+{% endblock %}
