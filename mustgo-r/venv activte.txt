@@ -1,1 +1,0 @@
-C:\Dev\django_project\first-django> venv\Scripts\activate.bat

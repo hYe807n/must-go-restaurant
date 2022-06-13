@@ -1,28 +1,28 @@
 {% extends 'first/base.html' %} {% load static %} {% block content %}
-<div class="container">
-  {% for item in items %}
+<div class="container" async>
+  {% for item in searchlist %}
   <div class="row search-item" style="margin: 20px auto">
-    {%for name, address, point, count, img, platform in item%}
     <div class="col-sm-12">
       <div class="card border-secondary">
         <div class="card-body">
-          <!-- {% if item.photo %}
-        <img
-          src="{{ item.photo.url }}"
-          style="width: 120px; margin: 0px; float: right"
-        />
-        {% endif %} -->
-          <h5 class="card-title">{{name}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{address}}</h6>
+          {% if item.4 %}
+          <img
+            src="{{ item.4 }}"
+            style="width: 120px; margin: 0px; float: right"
+          />
+          {% endif %}
+          <h5 class="card-title">{{ item.0 }}</h5>
+          <h7 class="card-subtitle mb-2 text-muted">{{ item.1 }}</h7>
           <p class="card-text">
-            평점: {% if item.average_point == None %} 0 {% else %} {{ point }}
-            {% endif %} ({{count}})
+            평점: {% if item.2 == None %} 0 {% else %}
+            {{ item.2 }} {% endif %} ({{ item.3 }})
           </p>
+          <span style="font-size: small;">- {{item.5}} -</span>
         </div>
       </div>
     </div>
   </div>
-  {% endfor %} {% endfor %}
+  {% endfor %}
 </div>
 
 {% endblock %}

@@ -4,9 +4,9 @@ from django.core.paginator import Paginator
 from first.forms import RestaurantForm, ReviewForm, UpdateRestaurantForm
 from django.http import HttpResponseRedirect
 from django.db.models import Count, Avg
-from first.crawling.pages import mango, siksin, dinning
+from first.crawling.pages import crawling, mango, siksin, reset, dinning
+import asyncio 
 
-# Create your views here.
 
 def list(request):
     restaurants = Restaurant.objects.all().annotate(reviews_count=Count('review')).annotate(average_point=Avg('review__point'))
@@ -102,22 +102,12 @@ def review_list(request):
     return render(request, 'first/review_list.html', context)
 
 
-def search(request):
-    # searchrests = SearchedRestaurant.objects.all().select_related().order_by('-created_at')
-    # paginator = Paginator(searchrests, 10)
-    # slastpage = int(paginator.num_pages)-1
-    # page = request.GET.get('page')
-    # items = paginator.get_page(page)
-
-    # context={
-    #     'searchrests' : items, 
-    #     'slastPage' : slastpage,
-    # }
-    
+async def search(request):
     if request.method=="GET":
         keyword = request.GET.get('search')
-        mango(keyword)
-        siksin(keyword)
-        searchlist = dinning(keyword)
+        reset()
+        
+        await asyncio.gather(mango(keyword), siksin(keyword), dinning(keyword))
+        resobj = crawling()
 
-        return render(request, 'first/search.html' ,{'items': searchlist})
+        return render(request, 'first/search.html' ,{'searchlist': resobj})
